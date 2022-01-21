@@ -1,7 +1,8 @@
 https://github.com/mihai2014/temporar1.git
 
 
-Go to / : git init .
+Go to / 
+git init .
 git add . 
 git status
 
