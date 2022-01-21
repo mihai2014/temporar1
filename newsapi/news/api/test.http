@@ -1,0 +1,52 @@
+http://localhost:8000/api/articles1/
+###
+
+GET http://localhost:8000/api/articles1/1/
+###
+
+POST http://localhost:8000/api/articles1/ HTTP/1.1
+content-type: application/json
+
+{
+  "author": "Dan Badulescu 6",
+  "title": "desspre calendar",
+  "description": "stilisti",
+  "body": "calendar iulian versus gregorian - new",
+  "location": "around here",
+  "publication_date": "2022-01-21",
+  "active": true
+}
+###
+
+PUT http://localhost:8000/api/articles1/2/ HTTP/1.1
+content-type: application/json
+
+{
+  "author": "Dan Badulescu",
+  "title": "desspre calendar",
+  "description": "stilisti",
+  "body": "calendar iulian versus gregorian #4",
+  "location": "around here",
+  "publication_date": "2022-01-18",
+  "active": true
+}
+###
+
+http://localhost:8000/api/articles2/2/
+###
+
+GET http://localhost:8000/api/articles2/1/
+###
+
+PUT http://localhost:8000/api/articles2/2/ HTTP/1.1
+content-type: application/json
+
+{
+  "author": "Dan Badulescu",
+  "title": "desspre calendar",
+  "description": "stilisti",
+  "body": "calendar iulian versus gregorian #5",
+  "location": "around here",
+  "publication_date": "2022-01-18",
+  "active": true
+}

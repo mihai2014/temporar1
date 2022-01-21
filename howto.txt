@@ -1,0 +1,103 @@
+install: 
+    go, python (intellisense)  [for go to definition, among others]
+    #vim
+
+vS shortcuts (selection)
+tab, shift+tab
+Ctrl+K+C/Ctrl+K+U     comment / uncomment
+Move Code Alt+Up/Down
+
+Ctrl+Shift+P
+
+#vim comment/uncomment block:
+#selection: ctrl+v(isual) and arrows(up/down)
+#insert: shift_i(insert) and #
+#selection: ctrl+v(isual) and arrows(up/down)
+#delete: x
+
+#vim indent block:
+#ctr+v, arrows, >/<
+
+python -m venv venv
+source venv/bin/activate
+pip list
+pip install django
+pip install djangorestframework
+
+django-admin startproject newsapi
+
+(cd newsapi)
+code .
+show all commands: ctrl+shift+p
+delete <
+search: python ... (virtual env select)
+new terminal
+
+python manage.py startapp news
+python manage.py makemigrations
+python manage.py migrate
+
+python manage.py createsuperuser
+
+
+Serialization (Serializer , ModelSerializer):
+
+                           SERIALIZE 
+
+(query sets,
+model instances, etc)                                (request, response)
+Dj Data types     ===>    Python Data types    ===>  Bytes (JSON encode) 
+        Serializer(Dj instance)            JSONRenderer
+        Serializer(data=python ta)         JSONParser
+                  <===                          <===
+                             
+                            DESERIALIZE
+
+Serializers         Parsers
+ModelSerializer     Renderers
+
+
+python manage.py shell
+
+Serialize
+---------
+
+from news.models import Article
+from news.api.serializers import ArticleSerializer
+from rest_framework.renderers import JSONRenderer
+
+article_instance = Article.objects.first()          [django instance]
+serializer = ArticleSerializer(article_instance)    [python data type]
+serializer.data
+{'id': 1, 'author': 'Dan Badulescu', 'title': 'desspre calendar', 'description': 'stilisti', 'body': 'calendar iulian versus gregorian', 'location': 'around here', 'publication_date': '2022-01-18', 'active': True, 'created_at': '2022-01-18T11:29:38.874716Z', 'updated_at': '2022-01-18T11:29:38.874753Z'}
+json = JSONRenderer().render(serializer.data)       [JSONRender]
+b'{"id":1,"author":"Dan Badulescu","title":"desspre calendar","description":"stilisti","body":"calendar iulian versus gregorian","location":"around here","publication_date":"2022-01-18","active":true,"created_at":"2022-01-18T11:29:38.874716Z","updated_at":"2022-01-18T11:29:38.874753Z"}'
+
+Deserialize
+-----------
+
+import io  (handling data streaming)
+from rest_framework.parsers import JSONParser
+
+stream = io.BytesIO(json)
+data = JSONParser().parse(stream)                   [python data]
+
+{'id': 1, 'author': 'Dan Badulescu', 'title': 'desspre calendar', 'description': 'stilisti', 'body': 'calendar iulian versus gregorian', 'location': 'around here', 'publication_date': '2022-01-18', 'active': True, 'created_at': '2022-01-18T11:29:38.874716Z', 'updated_at': '2022-01-18T11:29:38.874753Z'}
+
+serializer = ArticleSerializer(data=data)
+serializer.is_valid()
+serializer.validated_data
+
+OrderedDict([('author', 'Dan Badulescu'), ('title', 'desspre calendar'), ('description', 'stilisti'), ('body', 'calendar iulian versus gregorian'), ('location', 'around here'), ('publication_date', datetime.date(2022, 1, 18)), ('active', True)])
+
+serializer.save()
+Article.objects.all()
+
+
+
+@api_view decorator  section 3: 16
+APIView class  ==> Generic Class Based Views
+
+http testing: REST Client, (Thunder Client)
+--------------------------
+
