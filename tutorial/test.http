@@ -2,6 +2,7 @@ http://localhost:8000/users/
 ###
 
 GET http://localhost:8000/users/
+Accept: application/json; indent=4
 Authorization: Basic admin:admin
 ###
 
