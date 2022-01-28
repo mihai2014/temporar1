@@ -57,6 +57,7 @@ Dj Data types     ===>    Python Data types    ===>  Bytes (JSON encode)
 Serializers         Parsers
 ModelSerializer     Renderers
 
+Serializer -> ModelSerializer
 
 python manage.py shell
 

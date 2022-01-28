@@ -6,3 +6,34 @@ Accept: application/json; indent=4
 Authorization: Basic admin:admin
 ###
 
+GET http://localhost:8000/snippets/
+###
+
+POST http://localhost:8000/snippets/
+
+{
+  "title": "test",
+  "code": "print('this is a test')",
+  "linenos": false,
+  "language": "python",
+  "style": "friendly"
+}
+###
+
+
+GET http://localhost:8000/snippets/7
+###
+
+PUT http://localhost:8000/snippets/7/
+
+{
+  "title": "test",
+  "code": "print('this is a new test')",
+  "linenos": false,
+  "language": "python",
+  "style": "friendly"
+}
+###
+
+DELETE http://localhost:8000/snippets/5/
+
