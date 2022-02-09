@@ -1,0 +1,87 @@
+python manage.py shell
+
+from notes.models import Notes
+from notes.api.serializers import NotesSerializer0
+from notes.api.serializers import NotesSerializer1
+
+
+** Using Serializer
+
+Serialize  ==> net
+---------
+
+from rest_framework.renderers import JSONRenderer
+
+note = Notes.objects.first()                        #[django instance]
+serializer = NotesSerializer0(note)    
+serializer.data  
+{'id': 1, 'created': '2022-02-09T13:00:26.320545Z', 'content': 'nota 1'}
+                                                                            <--|
+json = JSONRenderer().render(serializer.data)       #[bytes]                   |
+b'{"id":1,"created":"2022-02-09T13:00:26.320545Z","content":"nota 1"}'         | 
+                                                                               |
+net ==> Deserialize                                                            |
+-----------                                                                    |
+                                                                               |
+import io  #(handling data streaming)                                          |
+from rest_framework.parsers import JSONParser                                  |
+                                                                               |
+stream = io.BytesIO(json)                           #[bytes]                   |
+                                                                            <--|
+data = JSONParser().parse(stream)                   #[python data]
+{'id': 1, 'created': '2022-02-09T13:00:26.320545Z', 'content': 'nota 1'}
+serializer = NotesSerializer0(data=data)
+serializer.is_valid()
+serializer.validated_data
+OrderedDict([('content', 'nota 1')])
+
+serializer.save()
+Notes.objects.all()
+
+
+Create (insert)
+------
+data = {'content': 'nota 4 - this is new'}
+serializer = NotesSerializer0(data=data)
+serializer.is_valid()
+serializer.save()
+
+create
+<Notes: nota 4 - this is new 2022-02-09 13:12:29.598304+00:00>
+
+Update
+------
+my_note = Notes.objects.filter(content__contains="nota 4")[0]
+serializer = NotesSerializer0(my_note)    
+serializer.data  
+{'id': 4, 'created': '2022-02-09T13:12:29.598304Z', 'content': 'nota 4 - this is new'}
+
+data = {'id': 4, 'created': '2022-02-09T13:12:29.598304Z', 'content': 'nota 4 - this is modified'}
+serializer = NotesSerializer0(data=data)
+serializer.is_valid()
+serializer.save()
+
+
+** using ModelSerializer
+
+Create (customize ModelSerializer)
+------
+
+from notes.api.serializers import NotesSerializer1
+
+data = {'content': 'nota 6'}
+serializer = NotesSerializer1(data=data)
+serializer.is_valid()
+serializer.save()
+
+
+Update
+------
+
+my_note = Notes.objects.filter(content__contains="nota 6")[0]
+serializer = NotesSerializer1(my_note)    
+data = serializer.data  
+
+serializer = NotesSerializer1(data=data)
+serializer.is_valid()
+serializer.update(my_note, data)

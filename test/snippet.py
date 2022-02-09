@@ -38,16 +38,16 @@ print(content)
 
 # deserialize
 
-stream = io.BytesIO(content)
+stream = io.BytesIO(content)                        #bytes
 data = JSONParser().parse(stream)
 print(data)                                         #python (dict)
 serializer = SnippetSerializer(data=data)           
 condition = serializer.is_valid()
 if(condition):
     print(serializer.validated_data)                #python (ordered dict)
-serializer.save()
+serializer.save()                                   #insert
 
 # serializing query sets
 
-serializer = SnippetSerializer(Snippet.objects.all(), many=True)
+serializer = SnippetSerializer(Snippet.objects.all(), many=True)  #dj (insert)
 print(serializer.data)

@@ -20,7 +20,7 @@ from rest_framework import generics
 
 from django.views.decorators.csrf import csrf_protect
 
-# regular Django views
+# regular Django views (return JsonResponse)
 
 # no csrf !
 @csrf_exempt
@@ -68,6 +68,7 @@ def snippet_detail1(request, pk):
         snippet.delete()
         return HttpResponse(status=204)   
 
+# decorator (return Api Response)
 
 @api_view(['GET', 'POST'])
 def snippet_list2(request):
@@ -112,6 +113,7 @@ def snippet_detail2(request, pk):
         return Response(status=status.HTTP_204_NO_CONTENT)        
 
 # Rewriting our API using class-based views
+# get, post property and Response
 
 class SnippetList1(APIView):
     """
@@ -157,8 +159,7 @@ class SnippetDetail1(APIView):
         snippet.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)        
 
-
-# Mixins
+# GenericAPIView + Mixins
 
 class SnippetList2(mixins.ListModelMixin,
                   mixins.CreateModelMixin,
@@ -191,7 +192,7 @@ class SnippetDetail2(mixins.RetrieveModelMixin,
         return self.destroy(request, *args, **kwargs)
 
 
-# Using generic class-based views
+# Concrete view classes
 
 from snippets.models import Snippet
 from snippets.serializers import SnippetSerializer

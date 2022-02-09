@@ -49,7 +49,7 @@ serializer = ArticleSerializer(data=data)
 print(serializer.is_valid())
 if(serializer.is_valid()):
     print(f"II) ordered dict(python data){serializer.validated_data}")               #[II) python data type]
-    serializer.save()
+    serializer.save()                                   #insert
     article_instance = Article.objects.first()          #[django instance]
     print(f"article(django instance): {article_instance}")
 
