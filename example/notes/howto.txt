@@ -21,7 +21,7 @@ json = JSONRenderer().render(serializer.data)       #[bytes]                   |
 b'{"id":1,"created":"2022-02-09T13:00:26.320545Z","content":"nota 1"}'         | 
                                                                                |
 net ==> Deserialize                                                            |
------------                                                                    |
+-----------                                                                    |  net
                                                                                |
 import io  #(handling data streaming)                                          |
 from rest_framework.parsers import JSONParser                                  |
@@ -85,3 +85,4 @@ data = serializer.data
 serializer = NotesSerializer1(data=data)
 serializer.is_valid()
 serializer.update(my_note, data)
+

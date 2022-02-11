@@ -28,7 +28,7 @@ class NotesSerializer1(serializers.ModelSerializer):
         model = Notes
         fields = ['id', 'content']
 
-    # customize
+    # customize (parent class)
 
     def create(self, validated_data):
         """
