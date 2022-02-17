@@ -12,15 +12,15 @@ urlpatterns = [
     path('notes2/<int:pk>/', views.notes_detail2),
 
     # APIView
-    #path('notes3/', views.notesList1.as_view()),
-    #path('notes3/<int:pk>/', views.notes_detail1.as_view()),
+    path('notes3/', views.notes_list3.as_view()),
+    path('notes3/<int:pk>/', views.notes_detail3.as_view()),
 
     # GenericAPIView + Mixins
-    #path('notes4/', views.notesList2.as_view()),
-    #path('notes4/<int:pk>/', views.notes_detail2.as_view()),
+    path('notes4/', views.notes_list4.as_view()),
+    path('notes4/<int:pk>/', views.notes_list4.as_view()),
 
     # Concrete view classes
-    #path('notes5/', views.notesList3.as_view()),
-    #path('notes5/<int:pk>/', views.notes_detail3.as_view()),
+    path('notes5/', views.notes_list3.as_view()),
+    path('notes5/<int:pk>/', views.notes_detail3.as_view()),
 
 ]
